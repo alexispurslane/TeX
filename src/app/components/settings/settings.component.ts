@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { openCloseAnimation } from 'src/app/models/appAnimation';
 import { Location } from '@angular/common'
-import { KodiwebsocketService } from 'src/app/services/kodiwebsocket.service';
 import { LocalStorageService, STORAGE_KEYS } from 'src/app/services/local-storage.service';
 import { environment } from '../../../environments/environment';
 

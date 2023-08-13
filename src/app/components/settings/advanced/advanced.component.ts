@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { KodiApiService } from 'src/app/services/kodi-api.service';
-import { KodiwebsocketService } from 'src/app/services/kodiwebsocket.service';
 import { LocalStorageService, STORAGE_KEYS } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -10,11 +9,11 @@ import { LocalStorageService, STORAGE_KEYS } from 'src/app/services/local-storag
 })
 export class AdvancedComponent implements OnInit {
 
-  constructor(public kodiApi:KodiApiService, public kodiWebSocketService: KodiwebsocketService, private localStorage: LocalStorageService,) { }
+  constructor(public kodiApi:KodiApiService, private localStorage: LocalStorageService,) { }
 
   ngOnInit(): void {
-    this.webSocketAddrValue = this.kodiWebSocketService.getAddress();
-    this.webSocketPortValue = this.kodiWebSocketService.getPort();
+    this.webSocketAddrValue = "https://127.0.0.1";
+    this.webSocketPortValue = 8080;
   }
 
    //WebSocket
@@ -26,8 +25,6 @@ export class AdvancedComponent implements OnInit {
  
    webSocketResetAddr(){
      this.localStorage.removeData(STORAGE_KEYS.websocket_address);
-     this.webSocketAddrValue = this.kodiWebSocketService.getAddress();
-     this.webSocketSaveChange();
    }
  
    webSocketPortValue = 0
@@ -37,15 +34,9 @@ export class AdvancedComponent implements OnInit {
  
    webSocketResetPort(){
      this.localStorage.removeData(STORAGE_KEYS.websocket_port);
-     this.webSocketPortValue = this.kodiWebSocketService.getPort();
-     this.webSocketSaveChange();
    }
  
    webSocketSaveChange(){
-     this.kodiWebSocketService.setAddress(this.webSocketAddrValue);
-     this.kodiWebSocketService.setPort(this.webSocketPortValue);
-     this.kodiWebSocketService.close();
-     this.kodiWebSocketService.connect();
    }
 
   //JSON RPC Test
@@ -53,9 +44,6 @@ export class AdvancedComponent implements OnInit {
   request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "id": 1}';
   requestResponse:string = "";
   executeRequest(){
-    this.kodiApi.misc.sendRequest(this.request).subscribe((e) => {
-      this.requestResponse = JSON.stringify(e, null, 2);
-    })
   }
 
 }

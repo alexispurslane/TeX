@@ -4,7 +4,6 @@ import { KodiPlayer } from '../models/player/kodiPlayer';
 import { ControlPlayer } from '../models/player/player';
 import { ApplicationService } from './application.service';
 import { KodiApiService } from './kodi-api.service';
-import { KodiwebsocketService } from './kodiwebsocket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +16,7 @@ export class PlayerService {
 
   useInternal: boolean = true;
 
-  constructor(private kodiApi:KodiApiService, private kodiWebsocket:KodiwebsocketService, private application:ApplicationService) {
-    this.kodiWebsocket.registerPlayerHandlers(this);
+  constructor(private kodiApi:KodiApiService, private application:ApplicationService) {
     if(this.application.musicsDefaultPlayer == 'internal'){
       this.useInternal = true;
     }
