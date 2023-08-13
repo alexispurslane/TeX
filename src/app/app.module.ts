@@ -18,7 +18,6 @@ import { MediaInformationsComponent } from './components/media-informations/medi
 import { MovieInformationComponent } from './components/media-informations/movie-information/movie-information.component';
 import { TvshowInformationComponent } from './components/media-informations/tvshow-information/tvshow-information.component';
 import { EpisodeComponent } from './components/media-informations/tvshow-information/episode/episode.component';
-import { RemoteComponent } from './components/remote/remote.component';
 import { PlaylistItemComponent } from './components/header/player/playlist-item/playlist-item.component';
 import { SearchComponent } from './components/libraries/search/search.component';
 import { SearchbarComponent } from './components/header/searchbar/searchbar.component';
@@ -67,7 +66,6 @@ import { ContributeComponent } from './components/settings/contribute/contribute
     MovieInformationComponent,
     TvshowInformationComponent,
     EpisodeComponent,
-    RemoteComponent,
     PlaylistItemComponent,
     SearchComponent,
     SearchbarComponent,

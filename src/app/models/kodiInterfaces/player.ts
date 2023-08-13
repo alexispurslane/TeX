@@ -9,7 +9,6 @@ export enum PlayerType {
 export enum PlayerPlayerType {
     "internal",
     "external",
-    "remote"
 }
 
 export interface Player {
