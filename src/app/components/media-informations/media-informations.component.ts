@@ -117,8 +117,14 @@ export class MediaInformationsComponent implements OnInit {
 
   
   playMovie(){
-    if(!this.isLoaded) return;
-    this.player.openMediaFile((this.media as VideoDetailsMovie).file ?? "");
+    if(!this.isLoaded) return; 
+    if (this.isMovie()) {
+        if(this.media.file){
+            this.kodiApi.file.getPreparedFileUrl(this.media.file).subscribe((resp) => {
+                window.open(resp);
+            });
+        }
+    }
     this.close()
   }
 
