@@ -32,6 +32,13 @@ export class MediacardComponent implements OnInit {
 
   constructor(private kodiApi:KodiApiService, private location:Location, private application: ApplicationService, private searchService: SearchService, private router:Router) { }
 
+  isOverflowing(element: HTMLElement) {
+    if (element.offsetWidth < element.scrollWidth) {
+      console.log('element overflowing');
+    }
+    return element.offsetWidth < element.scrollWidth;
+  }
+
   ngOnInit(): void {
 
     let imageFile = "";

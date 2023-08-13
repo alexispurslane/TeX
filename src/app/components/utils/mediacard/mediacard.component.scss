@@ -1,0 +1,27 @@
+.ticker-tape-container {
+  overflow-x: hidden;
+  display: flex;
+}
+
+.ticker-tape {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+
+.ticker-tape-scroll {
+  margin-right: 1rem;
+}
+
+.ticker-tape-container:hover > .ticker-tape-scroll {
+  animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

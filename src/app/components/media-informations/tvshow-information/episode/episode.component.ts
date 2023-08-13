@@ -44,6 +44,14 @@ export class EpisodeComponent implements OnInit {
     console.log(this.episode.streamdetails)
   }
 
+  playThisEpisode() {
+      if(this.episode.file) {
+          this.kodiApi.file.getPreparedFileUrl(this.episode.file).subscribe((resp) => {
+              window.open(resp);
+          });
+      }
+  }
+
   toogleMoreInfo() : void {
 
     if(!this.fileDetails && !this.moreInfo){
@@ -63,24 +71,7 @@ export class EpisodeComponent implements OnInit {
     return Number((value/Math.pow(10, 9)).toFixed(2));
   }
 
-  async playEpisode(event: any){
-
-    this.kodiApi.playlist.clear(1)
-    let items: PlaylistItem[] = [];
-
-    if(this.episode.tvshowid && this.episode.season)
-    this.kodiApi.media.getEpisodes(this.episode.tvshowid, this.episode.season).subscribe(resp => {
-      const episodes: VideoDetailsEpisode[] = resp.episodes
-      episodes.sort((a, b) => (a.episode ?? 0) -(b.episode ?? 0)).filter(ep => (ep.episode ?? 0) >= (this.episode.episode ?? 0)).forEach(epi => {
-        const item: PlaylistItem = {
-          episodeid: epi.episodeid
-        }
-        items.push(item);
-      });
-      this.playListEpisodes(items);
-    });
-  }
-
+  
   async playListEpisodes(items: PlaylistItem[]){
       await this.kodiApi.playlist.add(1, items);
       this.kodiApi.player.open({'playlistid':1})

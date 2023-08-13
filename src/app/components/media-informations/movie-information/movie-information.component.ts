@@ -21,9 +21,9 @@ export class MovieInformationComponent implements OnInit {
 
   @Input() movie!: VideoDetailsMovie;
   @Input() isLoaded: boolean = false;
+  @Input() downloadUrl: string = "";
 
   trailerUrl:SafeResourceUrl = "";
-  downloadUrl: string = "";
 
   moreInfo = false;
   fileDetails!:ListItemFile;

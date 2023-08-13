@@ -68,7 +68,7 @@
 
             <div *ngIf="!edit" @openClose>
                 <p *ngIf="isLoaded" class="text-md text-justify my-4">{{media.plot}}</p>
-                <app-movie-information class="mt-8" *ngIf="isMovie()" [movie]="$any(media)" [isLoaded]="isLoaded"></app-movie-information>
+                <app-movie-information class="mt-8" *ngIf="isMovie()" [movie]="$any(media)" [downloadUrl]="downloadUrl" [isLoaded]="isLoaded"></app-movie-information>
                 <app-tvshow-information class="mt-8" *ngIf="!isMovie()" [tvShow]="$any(media)" [isLoaded]="isLoaded"></app-tvshow-information>
             </div>
 

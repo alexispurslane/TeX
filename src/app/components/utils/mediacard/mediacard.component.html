@@ -11,8 +11,17 @@
                     {{ $any(media).role }}
                 </p>
             </div>
-                     
+
+
             <div *ngIf="displayResume && isImgLoaded" [ngStyle]="{'width':resume + '%'}" class="border-b-2 border-dark-full rounded-br-xl h-8 absolute right-0" style="border-bottom-width: 2px;bottom: -0.5px;"></div>
         </div>       
+    </div>
+    <div #marqueeRef class="ticker-tape-container">
+      <span class="ticker-tape" [class.ticker-tape-scroll]="isOverflowing(marqueeRef)">
+        {{ $any(media).title ?? $any(media).artist ?? $any(media).name ?? $any(media) ?? "" }}
+      </span>
+      <span *ngIf="isOverflowing(marqueeRef)" aria-hidden="true" class="ticker-tape" [class.ticker-tape-scroll]="isOverflowing(marqueeRef)">
+        {{ $any(media).title ?? $any(media).artist ?? $any(media).name ?? $any(media) ?? "" }}
+      </span>
     </div>
 </button>

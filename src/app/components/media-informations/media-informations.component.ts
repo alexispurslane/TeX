@@ -25,8 +25,21 @@ export class MediaInformationsComponent implements OnInit {
   @Input() tvShowId!: number;
 
   isLoaded:boolean = false;
-  media!: VideoDetailsMovie | VideoDetailsTVShow;
+  private _media!: VideoDetailsMovie | VideoDetailsTVShow;
+  downloadUrl: string = "";
   edit = false;
+
+  public get media() {
+      return this._media;
+  }
+  public set media(newVal: VideoDetailsMovie | VideoDetailsTVShow) {
+      this._media = newVal;
+      if(this._media.file){
+          this.kodiApi.file.getPreparedFileUrl(this._media.file).subscribe((resp) => {
+              this.downloadUrl = resp;
+          });
+      }
+  }
 
   trailerUrl:SafeResourceUrl = "";
   fanartUrl: string = "";
@@ -57,7 +70,7 @@ export class MediaInformationsComponent implements OnInit {
 
     if(this.movieId != 0){
 
-      this.kodiApi.media.getMovieDetail(this.movieId).pipe(delay(1000)).subscribe((resp) => {
+      this.kodiApi.media.getMovieDetail(this.movieId).subscribe((resp) => {
         this.media = resp;
         this.isLoaded = true;
         
@@ -117,15 +130,9 @@ export class MediaInformationsComponent implements OnInit {
 
   
   playMovie(){
-    if(!this.isLoaded) return; 
-    if (this.isMovie()) {
-        if(this.media.file){
-            this.kodiApi.file.getPreparedFileUrl(this.media.file).subscribe((resp) => {
-                window.open(resp);
-            });
-        }
+    if (this.isMovie() && this.downloadUrl != "") {
+        window.open(this.downloadUrl);
     }
-    this.close()
   }
 
   async test () {
