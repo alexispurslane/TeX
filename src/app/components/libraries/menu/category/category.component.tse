@@ -6,14 +6,6 @@ import { Location} from '@angular/common';
 import { SearchService } from 'src/app/services/search.service';
 import { CategoryEntry } from 'src/app/models/kodiInterfaces/others';
 
-function removeArticles(str:string): string {
-  let words = str.toLowerCase().split(" ");
-  if (words.length <= 1) return str;
-  if (words[0] == 'a' || words[0] == 'the' || words[0] == 'an')
-    return words.splice(1).join(" ");
-  return str;
-}
-
 @Component({
   selector: 'app-movies-category',
   templateUrl: './category.component.html',
@@ -35,7 +27,7 @@ export class LibraryCategoryComponent implements OnInit {
 
   searchTextValue = ""
 
-  constructor(private kodiApi: KodiApiService, private router: Router, private location: Location, public searchService: SearchService) { }
+  constructor(private kodiApi: KodiApiService, private router: Router, private location:Location, public searchService: SearchService) { }
 
   ngOnInit(): void {
     this.getContent();
@@ -57,6 +49,12 @@ export class LibraryCategoryComponent implements OnInit {
    
   }
 
+  openContent(content: string){
+    this.searchService.clearFilters()
+    this.searchService.getArrayFilterFromFilter(this.filterName).push(content)
+    this.router.navigateByUrl("/search")
+  }
+
   modelChangeFn(e:any){
     this.searchTextValue = e;
     this.contentsFilter = this.contents.filter(c => c.name.toLocaleLowerCase().includes(e.toLocaleLowerCase()));
@@ -68,7 +66,7 @@ export class LibraryCategoryComponent implements OnInit {
   }
 
   loadMoviesData(){
-    this.kodiApi.media.getMovies({ properties: ["director", "writer", "cast", "year", "genre", "setid", "art"] }).subscribe(resp => {
+    this.kodiApi.media.getMovies({ propoerties: ["director", "writer", "cast", "year", "genre", "setid", "art"] }).subscribe(resp => {
       if(resp?.movies){
         this.contents = [];
         
@@ -85,8 +83,7 @@ export class LibraryCategoryComponent implements OnInit {
               this.kodiApi.media.getMovieSetDetail(setid).subscribe(resp => {
                   this.contents.push({
                     name: resp.title,
-                    image: resp.art.poster ?? "",
-                    movieset: resp
+                    image: resp.art.poster ?? ""
                   });
                   this.showMore();
               });
@@ -149,7 +146,7 @@ export class LibraryCategoryComponent implements OnInit {
           ...new Map(this.contents.map(x => [x.name, x])).values()
         ];
 
-        this.contents.sort((a, b) => removeArticles(a.name).localeCompare(removeArticles(b.name)));
+        this.contents.sort((a, b) => a.name.localeCompare(b.name));
         this.isLoading = false;
         this.searchTextValue = "";
         this.contentsFilter = this.contents;
@@ -159,7 +156,7 @@ export class LibraryCategoryComponent implements OnInit {
   }
 
   loadTvShowsData(){
-    this.kodiApi.media.getTvShows({ properties: ["cast", "year", "genre"] }).subscribe(resp => {
+    this.kodiApi.media.getTvShows({ propoerties: ["cast", "year", "genre"] }).subscribe(resp => {
       if(resp?.tvshows){
         this.contents = [];
         

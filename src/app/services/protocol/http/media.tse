@@ -14,7 +14,7 @@ export interface GetLibraryParameters {
   limit?: ListLimits
   filter?: any
   sort?: ListSort
-  properties?: string[]
+  propoerties?: string[]
   type?: string
 }
 
@@ -28,7 +28,7 @@ export class MediaRequest extends HttpRequestData {
   getMovies(parameter : GetLibraryParameters): Observable<ResponseWithLimits>{
       
       const params = {
-        "properties": parameter.properties ?? previewMovieProperties,
+        "properties": parameter.propoerties ?? previewMovieProperties,
         ...parameter.filter ? {"filter" : parameter.filter} : undefined,
         ...parameter.limit ? {"limits" : parameter.limit} : undefined,
         ...parameter.sort ? { "sort" : parameter.sort } : undefined
@@ -37,19 +37,6 @@ export class MediaRequest extends HttpRequestData {
       const req = this.getRequestUrl("getmovies", "VideoLibrary.GetMovies", params)
 
       return this.makeGetRequest(req);
-  }
-
-  getMovieSets(parameter : GetLibraryParameters): Observable<ResponseWithLimits>{
-    
-    const params = {
-      "properties": parameter.properties ?? previewMovieProperties,
-      ...parameter.limit ? {"limits" : parameter.limit} : undefined,
-      ...parameter.sort ? { "sort" : parameter.sort } : undefined
-    }
-
-    const req = this.getRequestUrl("getmovies", "VideoLibrary.GetMovieSets", params)
-
-    return this.makeGetRequest(req);
   }
 
   getRecentlyAddedMovies(parameter : GetLibraryParameters): Observable<ResponseWithLimits>{
@@ -63,7 +50,7 @@ export class MediaRequest extends HttpRequestData {
     const req = this.getRequestUrl("getrecentlyaddedmovies", "VideoLibrary.GetRecentlyAddedMovies", params)
 
     return this.makeGetRequest(req);
-  }
+}
 
   getMovieDetail(movieId: number): Observable<VideoDetailsMovie>{
 
@@ -93,7 +80,7 @@ export class MediaRequest extends HttpRequestData {
   getTvShows(parameter : GetLibraryParameters): Observable<ResponseWithLimits>{
 
     const params = {
-      "properties": parameter.properties ?? previewTVShowProperties,
+      "properties": parameter.propoerties ?? previewTVShowProperties,
       ...parameter.filter ? {"filter" : parameter.filter} : undefined,
       ...parameter.limit ? {"limits" : parameter.limit} : undefined,
       ...parameter.sort ? { "sort" : parameter.sort } : undefined

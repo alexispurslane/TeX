@@ -126,6 +126,7 @@ export class MediaInformationsComponent implements OnInit {
   close() {
     this.application.openMovieDetails = undefined;
     this.application.openTVShowDetails = undefined;
+    this.application.openMovieSetDetails = undefined;
     this.location.back();
   }
 

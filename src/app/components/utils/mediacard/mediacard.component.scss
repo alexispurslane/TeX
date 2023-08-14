@@ -1,6 +1,7 @@
 .ticker-tape-container {
   overflow-x: hidden;
   display: flex;
+  padding-top: 10px;
 }
 
 .ticker-tape {
@@ -13,7 +14,7 @@
   margin-right: 1rem;
 }
 
-.ticker-tape-container:hover > .ticker-tape-scroll {
+button:hover > div > .ticker-tape-scroll {
   animation: marquee 5s linear infinite;
 }
 
@@ -27,7 +28,8 @@
 }
 
 .image-placeholder {
-  height: 13em;
+  aspect-ratio: 2 / 3;
+  width: 100%;
   display: block;
   animation: loadPlaceholder 1s infinite ease-in-out;
   border-radius: 0.75rem;
